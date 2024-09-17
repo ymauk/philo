@@ -1,7 +1,8 @@
 NAME = philo
 CFLAGS = -Wall -Wextra -Werror
-SRC = src/philo
-OBJS = $(SRC:.c=.o)
+SRC = src/philo.c src/parsing.c src/utils.c
+OBJ_DIR = obj
+OBJS = $(SRC:src/%.c=$(OBJ_DIR)/%.o)
 
 B:= "\033[0;34m"
 P:= "\033[0;35m"
@@ -13,6 +14,11 @@ DC:= "\033[0;39m"
 $(NAME): $(OBJS)
 	@echo $(G)"Compiling philo..."$(DC)
 	@cc $(OBJS) -o $(NAME)
+	@echo $(Y)"philo is ready to start"$(DC)
+
+$(OBJ_DIR)/%.o: src/%.c
+	@mkdir -p $(OBJ_DIR)
+	@cc $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
 
@@ -21,6 +27,7 @@ all: $(NAME)
 
 clean:
 	@rm -f $(OBJS)
+	@rm -rf $(OBJ_DIR)
 
 fclean: clean
 	@rm -f $(NAME)

@@ -6,9 +6,19 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 13:03:25 by ymauk             #+#    #+#             */
-/*   Updated: 2024/09/13 13:12:44 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/09/17 15:13:20 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../philo.h"
 
+int	main(int argc, char **argv)
+{
+	t_data	data;
+
+	if (argc > 1)
+	{
+		input_data(argc, argv, &data);
+	}
+	return (0);
+}
