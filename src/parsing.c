@@ -6,24 +6,25 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:17:37 by ymauk             #+#    #+#             */
-/*   Updated: 2024/09/17 15:17:59 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/09/17 17:51:11 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	input_data(int argc, char **argv, t_data *data)
+void	parsing(int argc, char **argv, t_data *data)
 {
 	if (argc == 5 || argc == 6)
 	{
-		parsing(argc, argv);
+		checking_input(argc, argv);
 		fill_struct(argc, argv, data);
+		create_philos(data);
 	}
 	else
 		error_handling(ERROR_1);
 }
 
-void	parsing(int argc, char **argv)
+void	checking_input(int argc, char **argv)
 {
 	int	i;
 	int	j;
@@ -46,11 +47,32 @@ void	parsing(int argc, char **argv)
 
 void	fill_struct(int argc, char **argv, t_data *data)
 {
-	data->nbr_philo = ft_atoi(argv[1]);
+	data->nbr_of_philos = ft_atoi(argv[1]);
 	data->nbr_forks = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		data->nbr_philo_eat = ft_atoi(argv[5]);
+	else
+		data->nbr_philo_eat = 0;
+	data->check_dead = 0;
+}
+
+void	create_philos(t_data *data)
+{
+	t_philos	*philo;
+	int			i;
+
+	i = 0;
+	philo = (t_philos *) malloc((sizeof(t_philos) * data->nbr_of_philos));
+	if (!philo)
+		error_handling(ERROR_3);
+	while (data->nbr_of_philos > i)
+	{
+		philo[i].id_philo = i + 1;
+		philo->next = NULL;
+		ft_lstadd_back_ph(&data->philos, &philo[i]);
+		i++;
+	}
 }

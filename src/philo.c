@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 13:03:25 by ymauk             #+#    #+#             */
-/*   Updated: 2024/09/17 15:13:20 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/09/17 16:02:11 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int argc, char **argv)
 
 	if (argc > 1)
 	{
-		input_data(argc, argv, &data);
+		parsing(argc, argv, &data);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:19:07 by ymauk             #+#    #+#             */
-/*   Updated: 2024/09/17 15:08:41 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/09/17 17:23:08 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,28 @@ int	ft_atoi(const char *str)
 	return (sign * result);
 }
 
+// handling errors
 void	error_handling(char *msg)
 {
 	printf("%s", msg);
+}
+
+// new node at the end of the list
+void	ft_lstadd_back_ph(t_philos **lst, t_philos *new)
+{
+	t_philos	*ptr;
+
+	ptr = *lst;
+	if (lst == NULL)
+		return ;
+	if (ptr == 0)
+	{
+		*lst = new;
+		return ;
+	}
+	while (ptr->next != NULL)
+	{
+		ptr = ptr->next;
+	}
+	ptr->next = new;
 }
