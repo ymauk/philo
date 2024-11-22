@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:11:00 by ymauk             #+#    #+#             */
-/*   Updated: 2024/11/22 17:10:07 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/11/22 18:13:01 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	join_threads(t_data *data)
 	i = 0;
 	while (data->nbr_of_philos > i)
 	{
-		phtread_join(&cur_ph->thread, NULL);
+		pthread_join(cur_ph->thread, NULL);
 		cur_ph = cur_ph->next;
 		i++;
 	}
@@ -44,5 +44,22 @@ void	join_threads(t_data *data)
 
 void	*start_routine(void *arg)
 {
+	t_philos	*philo;
 
+	philo = (t_philos *)arg;
+	while (!philo->data->check_dead)
+	{
+		thinking((void *) philo);
+	}
+	return (NULL);
+}
+
+void	thinking(void *arg)
+{
+	t_philos	*philo;
+	long		time;
+
+	philo = (t_philos *)arg;
+	time = get_current_time() - philo->data->start_time;
+	printf("%zu Philosopher %d is thinking\n", time, philo->id_philo);
 }

@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:17:37 by ymauk             #+#    #+#             */
-/*   Updated: 2024/11/22 16:47:29 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/11/22 17:58:33 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,13 @@ void	create_philos(t_data *data)
 	int			i;
 
 	i = 0;
-	philo = (t_philos *) malloc((sizeof(t_philos) * data->nbr_of_philos));
+	philo = malloc((sizeof(t_philos) * data->nbr_of_philos));
 	if (!philo)
 		error_handling(ERROR_3);
 	while (data->nbr_of_philos > i)
 	{
 		philo[i].id_philo = i + 1;
+		philo[i].data = data;
 		// philo->next = NULL;
 		ft_lstadd_back_ph(&data->philos, &philo[i]);
 		i++;

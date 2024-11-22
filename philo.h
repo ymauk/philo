@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:35:42 by ymauk             #+#    #+#             */
-/*   Updated: 2024/11/22 17:06:58 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/11/22 18:13:43 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <pthread.h>
+# include <unistd.h>
+# include <sys/time.h>
 
 //colours
 # define B "\033[0;34m"
@@ -34,6 +36,7 @@ typedef struct s_data
 	int				time_to_sleep;
 	int				nbr_philo_eat;
 	int				check_dead;
+	size_t			start_time;
 }	t_data;
 
 typedef struct s_philos
@@ -41,7 +44,7 @@ typedef struct s_philos
 	struct s_data	*data;
 	struct s_philos	*next;
 	int				id_philo;
-	pthread_t		*thread;
+	pthread_t		thread;
 }	t_philos;
 
 
@@ -54,6 +57,7 @@ void	create_philos(t_data *data);
 //philo
 int		main(int argc, char **argv);
 void	print_philos(t_philos *head, int nbr_of_philos); //rausmachen
+void	debug_philos_list(t_philos *philos, int nbr_of_philos); //rausmachen
 
 //utils
 int		ft_atoi(const char *str);
@@ -64,6 +68,7 @@ size_t	get_current_time(void);
 
 //routine
 void	*start_routine(void *arg);
+void	thinking(void *arg);
 void	create_threads(t_data *data);
 void	join_threads(t_data *data);
 
