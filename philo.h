@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:35:42 by ymauk             #+#    #+#             */
-/*   Updated: 2024/11/22 18:13:43 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/11/22 18:35:05 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_philos
 	struct s_data	*data;
 	struct s_philos	*next;
 	int				id_philo;
+	int				last_meal;
 	pthread_t		thread;
 }	t_philos;
 
@@ -68,9 +69,12 @@ size_t	get_current_time(void);
 
 //routine
 void	*start_routine(void *arg);
-void	thinking(void *arg);
 void	create_threads(t_data *data);
 void	join_threads(t_data *data);
+
+//messages
+void	thinking(void *arg);
+void	eating(void *arg);
 
 //error message
 # define ERROR_1 R "Invalid number of arguments\n" DC

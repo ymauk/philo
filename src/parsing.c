@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:17:37 by ymauk             #+#    #+#             */
-/*   Updated: 2024/11/22 17:58:33 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/11/22 18:33:53 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	create_philos(t_data *data)
 	while (data->nbr_of_philos > i)
 	{
 		philo[i].id_philo = i + 1;
+		philo[i].last_meal = 0;
 		philo[i].data = data;
 		// philo->next = NULL;
 		ft_lstadd_back_ph(&data->philos, &philo[i]);

@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:11:00 by ymauk             #+#    #+#             */
-/*   Updated: 2024/11/22 18:13:01 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/11/22 18:34:27 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,7 @@ void	*start_routine(void *arg)
 	while (!philo->data->check_dead)
 	{
 		thinking((void *) philo);
+		eating((void *) philo);
 	}
 	return (NULL);
-}
-
-void	thinking(void *arg)
-{
-	t_philos	*philo;
-	long		time;
-
-	philo = (t_philos *)arg;
-	time = get_current_time() - philo->data->start_time;
-	printf("%zu Philosopher %d is thinking\n", time, philo->id_philo);
 }
