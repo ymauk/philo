@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:17:37 by ymauk             #+#    #+#             */
-/*   Updated: 2024/09/17 17:51:11 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/11/22 16:47:29 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	checking_input(int argc, char **argv)
 void	fill_struct(int argc, char **argv, t_data *data)
 {
 	data->nbr_of_philos = ft_atoi(argv[1]);
-	data->nbr_forks = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
@@ -62,6 +61,7 @@ void	fill_struct(int argc, char **argv, t_data *data)
 void	create_philos(t_data *data)
 {
 	t_philos	*philo;
+	t_philos	*current;
 	int			i;
 
 	i = 0;
@@ -71,8 +71,15 @@ void	create_philos(t_data *data)
 	while (data->nbr_of_philos > i)
 	{
 		philo[i].id_philo = i + 1;
-		philo->next = NULL;
+		// philo->next = NULL;
 		ft_lstadd_back_ph(&data->philos, &philo[i]);
 		i++;
+	}
+	if (data->philos)
+	{
+		current = data->philos;
+		while (current->next)
+			current = current->next;
+		current->next = data->philos;
 	}
 }
