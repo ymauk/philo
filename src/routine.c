@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:11:00 by ymauk             #+#    #+#             */
-/*   Updated: 2024/11/22 18:34:27 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/11/22 19:01:07 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	*start_routine(void *arg)
 	t_philos	*philo;
 
 	philo = (t_philos *)arg;
-	while (!philo->data->check_dead)
+	while (!philo->data->check_dead
+		&& philo->has_eaten != philo->data->nbr_philo_eat)
 	{
 		thinking((void *) philo);
 		eating((void *) philo);

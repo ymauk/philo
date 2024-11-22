@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:35:42 by ymauk             #+#    #+#             */
-/*   Updated: 2024/11/22 18:35:05 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/11/22 18:52:14 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				nbr_philo_eat;
-	int				check_dead;
 	size_t			start_time;
+	int				check_dead;
+	pthread_mutex_t	check_dead_m;
+	pthread_mutex_t	*forks;
 }	t_data;
 
 typedef struct s_philos
@@ -44,7 +46,8 @@ typedef struct s_philos
 	struct s_data	*data;
 	struct s_philos	*next;
 	int				id_philo;
-	int				last_meal;
+	int				has_eaten;
+	size_t			last_meal;
 	pthread_t		thread;
 }	t_philos;
 
