@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:19:07 by ymauk             #+#    #+#             */
-/*   Updated: 2024/11/22 16:42:53 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/11/26 15:39:31 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ void	ft_lstadd_back_ph(t_philos **lst, t_philos *new)
 {
 	t_philos	*ptr;
 
-	ptr = *lst;
 	if (lst == NULL)
 		return ;
+	ptr = *lst;
 	if (ptr == 0)
 	{
 		*lst = new;

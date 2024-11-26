@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:35:42 by ymauk             #+#    #+#             */
-/*   Updated: 2024/11/22 18:52:14 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/11/26 16:50:07 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,9 @@ void	join_threads(t_data *data);
 //messages
 void	thinking(void *arg);
 void	eating(void *arg);
+void	take_forks(void *arg);
+void	putdown_forks(void *arg);
+void	sleep(void *arg);
 
 //error message
 # define ERROR_1 R "Invalid number of arguments\n" DC

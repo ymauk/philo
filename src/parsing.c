@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:17:37 by ymauk             #+#    #+#             */
-/*   Updated: 2024/11/22 19:04:42 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/11/26 16:06:37 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ void	fill_struct(int argc, char **argv, t_data *data)
 	else
 		data->nbr_philo_eat = 0;
 	data->check_dead = 0;
+	data->start_time = 0;
+	data->philos = NULL;
+	data->forks = NULL;
 }
 
 void	create_philos(t_data *data)
@@ -66,19 +69,20 @@ void	create_philos(t_data *data)
 
 	i = 0;
 	philo = malloc((sizeof(t_philos) * data->nbr_of_philos));
-	if (!philo)
+	data->forks = malloc(sizeof(pthread_mutex_t) * data->nbr_of_philos);
+	if (!philo || !data->forks)
 		error_handling(ERROR_3);
 	while (data->nbr_of_philos > i)
 	{
 		philo[i].id_philo = i + 1;
 		philo[i].last_meal = 0;
 		philo[i].data = data;
+		philo[i].next = NULL;
 		pthread_mutex_init(&data->forks[i], NULL);
-		// philo->next = NULL;
 		ft_lstadd_back_ph(&data->philos, &philo[i]);
 		i++;
 	}
-	pthread_mutex_init(&data->check_dead_m, NULL);
+	// pthread_mutex_init(&data->check_dead_m, NULL);
 	if (data->philos)
 	{
 		current = data->philos;

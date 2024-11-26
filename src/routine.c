@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:11:00 by ymauk             #+#    #+#             */
-/*   Updated: 2024/11/22 19:01:07 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/11/26 16:48:45 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ void	*start_routine(void *arg)
 		&& philo->has_eaten != philo->data->nbr_philo_eat)
 	{
 		thinking((void *) philo);
-		eating((void *) philo);
+		take_forks((void *) philo);
+		// eating((void *) philo);
+		// putdown_forks((void *) philo);
+		// sleep((void *) philo);
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 13:03:25 by ymauk             #+#    #+#             */
-/*   Updated: 2024/11/22 18:01:56 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/11/26 16:07:37 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,49 +21,48 @@ int	main(int argc, char **argv)
 		parsing(argc, argv, &data);
 		// print_philos(data.philos, data.nbr_of_philos);
 		data.start_time = get_current_time();
-		// debug_philos_list(data.philos, data.nbr_of_philos);
 		create_threads(&data);
 		join_threads(&data);
 	}
 	return (0);
 }
 
-void	print_philos(t_philos *head, int nbr_of_philos)
+void print_philos(t_philos *head, int nbr_of_philos)
 {
     t_philos *current = head;
     int count = 0;
 
+    // Debug-Maßnahme 1: Überprüfe, ob die Liste existiert
     if (!current)
     {
-        printf("Die Liste ist leer.\n");
+        printf("Die Liste ist leer oder ungültig (head: %p).\n", (void *)head);
         return;
     }
 
-    printf("Philosophenliste:\n");
+    printf("Philosophenliste (Anzahl: %d):\n", nbr_of_philos);
+
+    // Debug-Maßnahme 2: Werte in der Schleife überprüfen
     do
     {
-        printf("Philosoph ID: %d\n", current->id_philo);
+        if (!current)
+        {
+            printf("Error: Ungültiger Knoten gefunden (current: NULL).\n");
+            return;
+        }
+
+        printf("Philosoph ID: %d, Last Meal: %zu, Current: %p, Next: %p\n",
+               current->id_philo,
+               current->last_meal,
+               (void *)current,
+               (void *)current->next);
+
         current = current->next;
         count++;
-    } while (current && count < nbr_of_philos); // Abbruch nach der Anzahl der Philosophen
+    } while (current != head && count < nbr_of_philos);
 
     // Hinweis auf Zirkularität
-    if (count == nbr_of_philos && current == head)
+    if (current == head)
         printf("Die Liste ist zirkulär.\n");
     else
         printf("Die Liste ist nicht vollständig zirkulär.\n");
-}
-
-void	debug_philos_list(t_philos *philos, int nbr_of_philos)
-{
-    t_philos *cur = philos;
-    int i = 0;
-
-    printf("Debugging Philosopher List:\n");
-    while (i < nbr_of_philos)
-    {
-        printf("Philosopher %d at address: %p, next: %p\n", cur->id_philo, (void *)cur, (void *)cur->next);
-        cur = cur->next;
-        i++;
-    }
 }
