@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:11:00 by ymauk             #+#    #+#             */
-/*   Updated: 2024/11/27 17:58:34 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/11/27 18:24:50 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ void	*start_routine(void *arg)
 	// 	}
 	// 	pthread_mutex_unlock(&philo->data->start);
 	// 	usleep(100); // Kurze Pause, um CPU-Last zu reduzieren
-	// }
-	if (philo->id_philo % 2 == 0)
-		ft_usleep(philo->data->time_to_eat / 2);
+	// // }
+	// if (philo->id_philo % 2 == 0)
+	// 	ft_usleep(philo->data->time_to_eat / 2);
 	while (!philo->data->check_dead
 		&& philo->has_eaten != philo->data->nbr_philo_eat)
 	{
