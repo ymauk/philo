@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:17:37 by ymauk             #+#    #+#             */
-/*   Updated: 2024/11/26 16:06:37 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/11/27 17:14:48 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	checking_input(int argc, char **argv)
 void	fill_struct(int argc, char **argv, t_data *data)
 {
 	data->nbr_of_philos = ft_atoi(argv[1]);
-	data->time_to_die = ft_atoi(argv[2]);
+	data->time_to_die = (size_t)ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
@@ -70,7 +70,7 @@ void	create_philos(t_data *data)
 	i = 0;
 	philo = malloc((sizeof(t_philos) * data->nbr_of_philos));
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->nbr_of_philos);
-	if (!philo || !data->forks)
+	if (!philo)
 		error_handling(ERROR_3);
 	while (data->nbr_of_philos > i)
 	{
@@ -79,10 +79,12 @@ void	create_philos(t_data *data)
 		philo[i].data = data;
 		philo[i].next = NULL;
 		pthread_mutex_init(&data->forks[i], NULL);
+		pthread_mutex_init(&philo[i].meal_mutex, NULL);
 		ft_lstadd_back_ph(&data->philos, &philo[i]);
 		i++;
 	}
-	// pthread_mutex_init(&data->check_dead_m, NULL);
+	pthread_mutex_init(&data->check_dead_m, NULL);
+	pthread_mutex_init(&data->print, NULL);
 	if (data->philos)
 	{
 		current = data->philos;

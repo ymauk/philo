@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:35:42 by ymauk             #+#    #+#             */
-/*   Updated: 2024/11/26 16:50:07 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/11/27 17:49:19 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,17 @@ typedef struct s_data
 {
 	struct s_philos	*philos;
 	int				nbr_of_philos;
-	int				time_to_die;
+	size_t			time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				nbr_philo_eat;
 	size_t			start_time;
 	int				check_dead;
+	int				start_simulation;
+	pthread_mutex_t	start;
 	pthread_mutex_t	check_dead_m;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	print;
 }	t_data;
 
 typedef struct s_philos
@@ -49,6 +52,7 @@ typedef struct s_philos
 	int				has_eaten;
 	size_t			last_meal;
 	pthread_t		thread;
+	pthread_mutex_t	meal_mutex;
 }	t_philos;
 
 
@@ -60,27 +64,29 @@ void	create_philos(t_data *data);
 
 //philo
 int		main(int argc, char **argv);
-void	print_philos(t_philos *head, int nbr_of_philos); //rausmachen
-void	debug_philos_list(t_philos *philos, int nbr_of_philos); //rausmachen
+// void	print_philos(t_philos *head, int nbr_of_philos); //rausmachen
+// void	debug_philos_list(t_philos *philos, int nbr_of_philos); //rausmachen
 
 //utils
 int		ft_atoi(const char *str);
-void	error_handling(char *msg);
 void	ft_lstadd_back_ph(t_philos **lst, t_philos *new);
 int		ft_usleep(size_t milliseconds);
 size_t	get_current_time(void);
+void	error_handling(char *msg);
 
 //routine
 void	*start_routine(void *arg);
+void	*monitoring_routine(void *arg);
 void	create_threads(t_data *data);
 void	join_threads(t_data *data);
+void	print_message(t_philos *philo, const char *status);
 
 //messages
 void	thinking(void *arg);
 void	eating(void *arg);
 void	take_forks(void *arg);
 void	putdown_forks(void *arg);
-void	sleep(void *arg);
+void	go_sleep(void *arg);
 
 //error message
 # define ERROR_1 R "Invalid number of arguments\n" DC
