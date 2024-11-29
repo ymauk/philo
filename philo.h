@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:35:42 by ymauk             #+#    #+#             */
-/*   Updated: 2024/11/27 17:49:19 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/11/29 17:03:01 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,12 @@ typedef struct s_data
 	int				nbr_philo_eat;
 	size_t			start_time;
 	int				check_dead;
-	int				start_simulation;
-	pthread_mutex_t	start;
-	pthread_mutex_t	check_dead_m;
+	// int				start_simulation;
+	// pthread_mutex_t	start;
+	// pthread_mutex_t	check_dead_m;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
+	pthread_t		monitoring;
 }	t_data;
 
 typedef struct s_philos
@@ -51,8 +52,8 @@ typedef struct s_philos
 	int				id_philo;
 	int				has_eaten;
 	size_t			last_meal;
+	pthread_mutex_t	meal;
 	pthread_t		thread;
-	pthread_mutex_t	meal_mutex;
 }	t_philos;
 
 
@@ -61,6 +62,7 @@ void	parsing(int argc, char **argv, t_data *data);
 void	checking_input(int argc, char **argv);
 void	fill_struct(int argc, char **argv, t_data *data);
 void	create_philos(t_data *data);
+int		all_eaten(t_data *data);
 
 //philo
 int		main(int argc, char **argv);

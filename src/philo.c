@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 13:03:25 by ymauk             #+#    #+#             */
-/*   Updated: 2024/11/27 18:01:25 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/11/29 16:45:07 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,21 @@
 int	main(int argc, char **argv)
 {
 	t_data		data;
-	// pthread_t	monitoring;
+	pthread_t	monitoring;
 
 	if (argc > 1)
 	{
 		parsing(argc, argv, &data);
-		data.start_simulation = 0;
-		pthread_mutex_init(&data.start, NULL);
 		// print_philos(data.philos, data.nbr_of_philos);
-		create_threads(&data);
-		pthread_mutex_lock(&data.start);
-		data.start_simulation = 1;
-		pthread_mutex_unlock(&data.start);
 		data.start_time = get_current_time();
-		// pthread_create(&monitoring, NULL, monitoring_routine, &data);
+		create_threads(&data);
+		pthread_create(&monitoring, NULL, monitoring_routine, &data);
 		join_threads(&data);
-		// pthread_join(monitoring, NULL);
+		pthread_join(monitoring, NULL);
+		// clean_up(&data);
 	}
+	else
+		error_handling(ERROR_1);
 	return (0);
 }
 

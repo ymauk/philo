@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:11:00 by ymauk             #+#    #+#             */
-/*   Updated: 2024/11/27 18:24:50 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/11/29 17:21:42 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	create_threads(t_data *data)
 	i = 0;
 	while (data->nbr_of_philos > i)
 	{
+		data->philos[i].last_meal = get_current_time();
 		pthread_create(&cur_ph->thread, NULL, start_routine, (void *)cur_ph);
 		cur_ph = cur_ph->next;
 		i++;
@@ -47,20 +48,8 @@ void	*start_routine(void *arg)
 	t_philos	*philo;
 
 	philo = (t_philos *)arg;
-	// while (1)
-	// {
-	// 	pthread_mutex_lock(&philo->data->start);
-	// 	if (philo->data->start_simulation)
-	// 	{
-	// 		pthread_mutex_unlock(&philo->data->start);
-	// 		break;
-	// 	}
-	// 	pthread_mutex_unlock(&philo->data->start);
-	// 	usleep(100); // Kurze Pause, um CPU-Last zu reduzieren
-	// // }
-	// if (philo->id_philo % 2 == 0)
-	// 	ft_usleep(philo->data->time_to_eat / 2);
-	while (!philo->data->check_dead
+	//die ungeraden warten lasse eine milisekunde
+	while (philo->data->check_dead != 1
 		&& philo->has_eaten != philo->data->nbr_philo_eat)
 	{
 		thinking((void *) philo);
@@ -70,6 +59,8 @@ void	*start_routine(void *arg)
 		putdown_forks((void *) philo);
 		go_sleep((void *) philo);
 	}
+	// printf("start routine\n");
+	// printf("nbr philo: %d\n", philo->id_philo);
 	return (NULL);
 }
 
@@ -81,31 +72,50 @@ void	print_message(t_philos *philo, const char *status)
 	pthread_mutex_unlock(&philo->data->print);
 }
 
-// void	*monitoring_routine(void *arg)
-// {
-// 	t_data	*data;
-// 	int		i;
+void	*monitoring_routine(void *arg)
+{
+	t_data	*data;
+	int		i;
 
-// 	i = 0;
-// 	data = (t_data *)arg;
-// 	while (1)
-// 	{
-// 		pthread_mutex_lock(&data->philos[i].meal_mutex);
-// 		while (data->nbr_of_philos > i)
-// 		{
-// 			if (get_current_time() - data->philos[i].last_meal
-// 				> data->time_to_die)
-// 			{
-// 				printf("%zu %d has taken a fork\n", get_current_time()
-// 					- data->start_time, data->philos[i].id_philo);
-// 				data->check_dead = 1;
-// 				pthread_mutex_unlock(&data->philos[i].meal_mutex);
-// 				return (NULL);
-// 			}
-// 			pthread_mutex_unlock(&data->philos[i].meal_mutex);
-// 			i++;
-// 		}
-// 		ft_usleep(1000);
-// 	}
-// 	return (NULL);
-// }
+	i = 0;
+	data = (t_data *)arg;
+	while (1)
+	{
+		if (all_eaten(data) == 1)
+			break ;
+		while (data->nbr_of_philos > i)
+		{
+			pthread_mutex_lock(&data->philos[i].meal);
+			if (get_current_time() - data->philos[i].last_meal
+				> data->time_to_die)
+			{
+				print_message(data->philos, "died");
+				data->check_dead = 1;
+				pthread_mutex_unlock(&data->philos[i].meal);
+				return (NULL);
+			}
+			pthread_mutex_unlock(&data->philos[i].meal);
+			i++;
+		}
+		ft_usleep(1000);
+	}
+	// printf("monitoring\n");
+	return (NULL);
+}
+
+int	all_eaten(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (data->nbr_of_philos > i)
+	{
+		// printf("has eaten: %d\n", data->philos->has_eaten);
+
+		if (data->philos[i].has_eaten != data->nbr_philo_eat)
+			return (0);
+		i++;
+	}
+	// printf("luca isst: %d\n", data->philos->has_eaten);
+	return (1);
+}

@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:17:37 by ymauk             #+#    #+#             */
-/*   Updated: 2024/11/27 17:14:48 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/11/29 16:46:05 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	fill_struct(int argc, char **argv, t_data *data)
 	if (argc == 6)
 		data->nbr_philo_eat = ft_atoi(argv[5]);
 	else
-		data->nbr_philo_eat = 0;
+		data->nbr_philo_eat = -1;
 	data->check_dead = 0;
 	data->start_time = 0;
 	data->philos = NULL;
@@ -75,11 +75,11 @@ void	create_philos(t_data *data)
 	while (data->nbr_of_philos > i)
 	{
 		philo[i].id_philo = i + 1;
-		philo[i].last_meal = 0;
+		// philo[i].last_meal = philo->data->start_time;
 		philo[i].data = data;
 		philo[i].next = NULL;
 		pthread_mutex_init(&data->forks[i], NULL);
-		pthread_mutex_init(&philo[i].meal_mutex, NULL);
+		pthread_mutex_init(&philo[i].meal, NULL);
 		ft_lstadd_back_ph(&data->philos, &philo[i]);
 		i++;
 	}
@@ -93,3 +93,15 @@ void	create_philos(t_data *data)
 		current->next = data->philos;
 	}
 }
+
+// void	clean_up(t_data *data)
+// {
+// 	int	i;
+
+// 	while (data->nbr_of_philos > i)
+// 	{
+// 		pthread_mutex_destroy(&data->forks[i]);
+// 		pthread_mutex_destroy(&philo[i].meal_mutex);
+
+// 	}
+// }

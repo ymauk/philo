@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 18:23:41 by ymauk             #+#    #+#             */
-/*   Updated: 2024/11/27 17:38:13 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/11/29 12:47:43 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ void	eating(void *arg)
 	t_philos	*philo;
 
 	philo = (t_philos *)arg;
-	pthread_mutex_lock(&philo->meal_mutex);
+	pthread_mutex_lock(&philo->meal);
 	philo->last_meal = get_current_time();
 	philo->has_eaten++;
-	pthread_mutex_unlock(&philo->meal_mutex);
+	pthread_mutex_unlock(&philo->meal);
 	print_message(philo, "is eating");
 	ft_usleep(philo->data->time_to_eat);
 }
