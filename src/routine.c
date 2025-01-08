@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:11:00 by ymauk             #+#    #+#             */
-/*   Updated: 2024/11/29 17:21:42 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/12/03 12:20:16 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,33 +43,29 @@ void	join_threads(t_data *data)
 	}
 }
 
-void	*start_routine(void *arg)
-{
-	t_philos	*philo;
-
-	philo = (t_philos *)arg;
-	//die ungeraden warten lasse eine milisekunde
-	while (philo->data->check_dead != 1
-		&& philo->has_eaten != philo->data->nbr_philo_eat)
-	{
-		thinking((void *) philo);
-		// ft_usleep(1000);
-		take_forks((void *) philo);
-		eating((void *) philo);
-		putdown_forks((void *) philo);
-		go_sleep((void *) philo);
-	}
-	// printf("start routine\n");
-	// printf("nbr philo: %d\n", philo->id_philo);
-	return (NULL);
-}
-
 void	print_message(t_philos *philo, const char *status)
 {
 	pthread_mutex_lock(&philo->data->print);
 	printf("%zu %d %s\n", get_current_time()
 		- philo->data->start_time, philo->id_philo, status);
 	pthread_mutex_unlock(&philo->data->print);
+}
+
+void	*start_routine(void *arg)
+{
+	t_philos	*philo;
+
+	philo = (t_philos *)arg;
+	//die ungeraden warten lasse eine milisekunde
+	while (philo->has_eaten != philo->data->nbr_philo_eat && philo->data->check_dead != 1)
+	{
+		thinking((void *) philo);
+		take_forks((void *) philo);
+		eating((void *) philo);
+		putdown_forks((void *) philo);
+		go_sleep((void *) philo);
+	}
+	return (NULL);
 }
 
 void	*monitoring_routine(void *arg)
@@ -83,6 +79,7 @@ void	*monitoring_routine(void *arg)
 	{
 		if (all_eaten(data) == 1)
 			break ;
+		printf("arrived\n");
 		while (data->nbr_of_philos > i)
 		{
 			pthread_mutex_lock(&data->philos[i].meal);
@@ -99,7 +96,6 @@ void	*monitoring_routine(void *arg)
 		}
 		ft_usleep(1000);
 	}
-	// printf("monitoring\n");
 	return (NULL);
 }
 
@@ -110,12 +106,10 @@ int	all_eaten(t_data *data)
 	i = 0;
 	while (data->nbr_of_philos > i)
 	{
-		// printf("has eaten: %d\n", data->philos->has_eaten);
-
 		if (data->philos[i].has_eaten != data->nbr_philo_eat)
 			return (0);
 		i++;
 	}
-	// printf("luca isst: %d\n", data->philos->has_eaten);
+	printf("all eaten return 1\n");
 	return (1);
 }

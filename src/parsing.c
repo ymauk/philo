@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:17:37 by ymauk             #+#    #+#             */
-/*   Updated: 2024/11/29 16:46:05 by ymauk            ###   ########.fr       */
+/*   Updated: 2024/12/03 10:21:21 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	create_philos(t_data *data)
 		ft_lstadd_back_ph(&data->philos, &philo[i]);
 		i++;
 	}
-	pthread_mutex_init(&data->check_dead_m, NULL);
+	// pthread_mutex_init(&data->check_dead_m, NULL);
 	pthread_mutex_init(&data->print, NULL);
 	if (data->philos)
 	{
