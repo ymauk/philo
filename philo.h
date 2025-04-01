@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:35:42 by ymauk             #+#    #+#             */
-/*   Updated: 2024/11/29 17:03:01 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/01 16:12:31 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_data
 	// pthread_mutex_t	check_dead_m;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
-	pthread_t		monitoring;
+	// pthread_t		monitoring;
 }	t_data;
 
 typedef struct s_philos

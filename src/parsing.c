@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:17:37 by ymauk             #+#    #+#             */
-/*   Updated: 2024/12/03 10:21:21 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/01 14:27:19 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,9 @@
 
 void	parsing(int argc, char **argv, t_data *data)
 {
-	if (argc == 5 || argc == 6)
-	{
-		checking_input(argc, argv);
-		fill_struct(argc, argv, data);
-		create_philos(data);
-	}
-	else
-		error_handling(ERROR_1);
+	checking_input(argc, argv);
+	fill_struct(argc, argv, data);
+	create_philos(data);
 }
 
 void	checking_input(int argc, char **argv)

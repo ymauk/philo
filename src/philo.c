@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 13:03:25 by ymauk             #+#    #+#             */
-/*   Updated: 2024/12/03 10:40:27 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/01 14:28:00 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(int argc, char **argv)
 	t_data		data;
 	pthread_t	monitoring;
 
-	if (argc > 1)
+	if (argc == 5 || argc == 6)
 	{
 		parsing(argc, argv, &data);
 		// print_philos(data.philos, data.nbr_of_philos);
