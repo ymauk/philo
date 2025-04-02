@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:19:07 by ymauk             #+#    #+#             */
-/*   Updated: 2025/03/28 14:25:59 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/02 16:49:43 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ int	ft_atoi(const char *str)
 }
 
 // handling errors
-void	error_handling(char *msg)
+void	error_handling(t_data *data, char *msg)
 {
+	if (!data)
+		clean_up(data);
 	printf("%s", msg);
 }
 

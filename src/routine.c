@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:11:00 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/01 17:27:48 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/02 17:06:25 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	*start_routine(void *arg)
 	philo = arg;
 	if (philo->id_philo % 2 != 0)
 		ft_usleep(philo->data->time_to_eat / 2);
-	while (philo->has_eaten != philo->data->nbr_philo_eat && philo->data->check_dead != 1)
+	while (philo->has_eaten != philo->data->nbr_philo_eat
+		&& philo->data->check_dead != 1)
 	{
 		thinking((void *) philo);
 		take_forks((void *) philo);
@@ -83,9 +84,6 @@ void	*monitoring_routine(void *arg)
 		while (data->nbr_of_philos > i)
 		{
 			pthread_mutex_lock(&data->philos[i].meal);
-			// printf("get current time: %zu data->philos.last meal: %zu\n ", get_current_time(), data->philos[i].last_meal);
-			// printf("time to die: %zu\n", data->time_to_die);
-			// printf("current time - last meal: %lu\n", get_current_time() - data->philos[i].last_meal);
 			if (get_current_time() - data->philos[i].last_meal
 				> data->time_to_die)
 			{
@@ -97,21 +95,6 @@ void	*monitoring_routine(void *arg)
 			pthread_mutex_unlock(&data->philos[i].meal);
 			i++;
 		}
-		// ft_usleep(1000);
 	}
 	return (NULL);
-}
-
-int	all_eaten(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (data->nbr_of_philos > i)
-	{
-		if (data->philos[i].has_eaten != data->nbr_philo_eat)
-			return (0);
-		i++;
-	}
-	return (1);
 }

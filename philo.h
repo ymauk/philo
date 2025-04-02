@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:35:42 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/01 16:12:31 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/02 16:59:21 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,15 @@ typedef struct s_philos
 
 
 //parsing
-void	parsing(int argc, char **argv, t_data *data);
-void	checking_input(int argc, char **argv);
+int		parsing(int argc, char **argv, t_data *data);
+int		checking_input(t_data *data, int argc, char **argv);
 void	fill_struct(int argc, char **argv, t_data *data);
 void	create_philos(t_data *data);
-int		all_eaten(t_data *data);
+void	clean_up(t_data *data);
 
 //philo
 int		main(int argc, char **argv);
-// void	print_philos(t_philos *head, int nbr_of_philos); //rausmachen
+int		all_eaten(t_data *data);
 // void	debug_philos_list(t_philos *philos, int nbr_of_philos); //rausmachen
 
 //utils
@@ -74,7 +74,7 @@ int		ft_atoi(const char *str);
 void	ft_lstadd_back_ph(t_philos **lst, t_philos *new);
 int		ft_usleep(size_t milliseconds);
 size_t	get_current_time(void);
-void	error_handling(char *msg);
+void	error_handling(t_data *data, char *msg);
 
 //routine
 void	*start_routine(void *arg);

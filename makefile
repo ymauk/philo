@@ -1,5 +1,6 @@
 NAME = philo
 CFLAGS = -Wall -Wextra -Werror
+LDFLAGS = -fsanitize=address
 SRC = src/philo.c src/parsing.c src/utils.c src/routine.c src/messages.c
 OBJ_DIR = obj
 OBJS = $(SRC:src/%.c=$(OBJ_DIR)/%.o)
@@ -13,7 +14,7 @@ DC:= "\033[0;39m"
 
 $(NAME): $(OBJS)
 	@echo $(G)"Compiling philo..."$(DC)
-	@cc $(OBJS) -o $(NAME)
+	@cc $(OBJS) $(CFLAGS) $(LDFLAGS) -o $(NAME)
 	@echo $(Y)"philo is ready to start"$(DC)
 
 $(OBJ_DIR)/%.o: src/%.c

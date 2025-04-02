@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 13:03:25 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/01 14:28:00 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/02 17:01:55 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,56 +19,31 @@ int	main(int argc, char **argv)
 
 	if (argc == 5 || argc == 6)
 	{
-		parsing(argc, argv, &data);
+		if (parsing(argc, argv, &data))
+			return (0);
 		// print_philos(data.philos, data.nbr_of_philos);
 		data.start_time = get_current_time();
 		create_threads(&data);
 		pthread_create(&monitoring, NULL, monitoring_routine, &data);
 		join_threads(&data);
 		pthread_join(monitoring, NULL);
-		// clean_up(&data);
+		clean_up(&data);
 	}
 	else
-		error_handling(ERROR_1);
+		error_handling(&data, ERROR_1);
 	return (0);
 }
 
-// void print_philos(t_philos *head, int nbr_of_philos)
-// {
-//     t_philos *current = head;
-//     int count = 0;
+int	all_eaten(t_data *data)
+{
+	int	i;
 
-//     // Debug-Maßnahme 1: Überprüfe, ob die Liste existiert
-//     if (!current)
-//     {
-//         printf("Die Liste ist leer oder ungültig (head: %p).\n", (void *)head);
-//         return;
-//     }
-
-//     printf("Philosophenliste (Anzahl: %d):\n", nbr_of_philos);
-
-//     // Debug-Maßnahme 2: Werte in der Schleife überprüfen
-//     do
-//     {
-//         if (!current)
-//         {
-//             printf("Error: Ungültiger Knoten gefunden (current: NULL).\n");
-//             return;
-//         }
-
-//         printf("Philosoph ID: %d, Last Meal: %zu, Current: %p, Next: %p\n",
-//                current->id_philo,
-//                current->last_meal,
-//                (void *)current,
-//                (void *)current->next);
-
-//         current = current->next;
-//         count++;
-//     } while (current != head && count < nbr_of_philos);
-
-//     // Hinweis auf Zirkularität
-//     if (current == head)
-//         printf("Die Liste ist zirkulär.\n");
-//     else
-//         printf("Die Liste ist nicht vollständig zirkulär.\n");
-// }
+	i = 0;
+	while (data->nbr_of_philos > i)
+	{
+		if (data->philos[i].has_eaten != data->nbr_philo_eat)
+			return (0);
+		i++;
+	}
+	return (1);
+}
