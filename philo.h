@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:35:42 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/02 16:59:21 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/02 17:22:23 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	clean_up(t_data *data);
 //philo
 int		main(int argc, char **argv);
 int		all_eaten(t_data *data);
+void	one_philo(char **argv);
 // void	debug_philos_list(t_philos *philos, int nbr_of_philos); //rausmachen
 
 //utils
