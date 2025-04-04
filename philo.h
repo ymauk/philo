@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:35:42 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/02 17:22:23 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/04 11:45:01 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_data
 	int				check_dead;
 	// int				start_simulation;
 	// pthread_mutex_t	start;
-	// pthread_mutex_t	check_dead_m;
+	pthread_mutex_t	check_dead_m;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
 	// pthread_t		monitoring;

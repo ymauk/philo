@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:11:00 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/02 17:06:25 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/04 11:22:44 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,9 @@ void	*monitoring_routine(void *arg)
 				> data->time_to_die)
 			{
 				print_message(&data->philos[i], "died");
+				pthread_mutex_lock(&data->check_dead_m);
 				data->check_dead = 1;
+				pthread_mutex_unlock(&data->check_dead_m);
 				pthread_mutex_unlock(&data->philos[i].meal);
 				return (NULL);
 			}

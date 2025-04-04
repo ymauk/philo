@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 18:23:41 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/02 15:53:56 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/04 11:34:33 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,32 @@ void	take_forks(void *arg)
 		print_message(philo, "has taken a fork");
 }
 
+// void	eating(void *arg)
+// {
+// 	t_philos	*philo;
+
+// 	philo = arg;
+// 	pthread_mutex_lock(&philo->meal);
+// 	philo->last_meal = get_current_time();
+// 	philo->has_eaten++;
+// 	// printf("has eaten: %d\n", philo->has_eaten);
+// 	pthread_mutex_unlock(&philo->meal);
+// 	if (philo->data->check_dead != 1)
+// 		print_message(philo, "is eating");
+// 	ft_usleep(philo->data->time_to_eat);
+// }
+
 void	eating(void *arg)
 {
 	t_philos	*philo;
+	size_t		current_time;
 
-	philo = arg;
+	philo = (t_philos *)arg;
+	current_time = get_current_time(); // Zeit einmal holen
 	pthread_mutex_lock(&philo->meal);
-	philo->last_meal = get_current_time();
+	philo->last_meal = current_time;
 	philo->has_eaten++;
-	// printf("has eaten: %d\n", philo->has_eaten);
+	// Optional: check_dead auch hier prüfen, falls Konsistenz wichtig ist
 	pthread_mutex_unlock(&philo->meal);
 	if (philo->data->check_dead != 1)
 		print_message(philo, "is eating");

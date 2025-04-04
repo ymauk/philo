@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:17:37 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/02 17:32:22 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/04 11:45:43 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ void	create_philos(t_data *data)
 
 	i = 0;
 	philo = malloc((sizeof(t_philos) * data->nbr_of_philos));
-	data->forks = malloc(sizeof(pthread_mutex_t) * data->nbr_of_philos);
 	if (!philo)
 		error_handling(data, ERROR_3);
-	// if (!data->forks)
-	// 	error_handling(data, ERROR_3);
+	data->forks = malloc(sizeof(pthread_mutex_t) * data->nbr_of_philos);
+	if (!data->forks)
+		error_handling(data, ERROR_3);
 	while (data->nbr_of_philos > i)
 	{
 		philo[i].id_philo = i + 1;
@@ -86,6 +86,7 @@ void	create_philos(t_data *data)
 		i++;
 	}
 	pthread_mutex_init(&data->print, NULL);
+	pthread_mutex_init(&data->check_dead_m, NULL);
 	if (data->philos)
 	{
 		current = data->philos;
@@ -105,6 +106,7 @@ void	clean_up(t_data *data)
 	{
 		nbr_philos = data->nbr_of_philos;
 		pthread_mutex_destroy(&data->print);
+		pthread_mutex_destroy(&data->check_dead_m);
 		while (nbr_philos > i)
 		{
 			pthread_mutex_destroy(&data->forks[i]);
@@ -114,6 +116,4 @@ void	clean_up(t_data *data)
 		free(data->philos);
 		free(data->forks);
 	}
-	// if (data)
-	// 	free(data);
 }
