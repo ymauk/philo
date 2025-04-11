@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 13:03:25 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/11 14:20:29 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/11 15:13:10 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	all_eaten(t_data *data)
 			return (0);
 		}
 		i++;
-		pthread_mutex_lock(&data->philos->meal);
+		pthread_mutex_unlock(&data->philos->meal);
 	}
 	return (1);
 }
