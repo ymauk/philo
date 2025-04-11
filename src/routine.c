@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:11:00 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/04 11:22:44 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/11 14:32:17 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	*start_routine(void *arg)
 	if (philo->id_philo % 2 != 0)
 		ft_usleep(philo->data->time_to_eat / 2);
 	while (philo->has_eaten != philo->data->nbr_philo_eat
-		&& philo->data->check_dead != 1)
+		&& check_mutex_var(philo, 1) != 1)
 	{
 		thinking((void *) philo);
 		take_forks((void *) philo);
@@ -87,11 +87,7 @@ void	*monitoring_routine(void *arg)
 			if (get_current_time() - data->philos[i].last_meal
 				> data->time_to_die)
 			{
-				print_message(&data->philos[i], "died");
-				pthread_mutex_lock(&data->check_dead_m);
-				data->check_dead = 1;
-				pthread_mutex_unlock(&data->check_dead_m);
-				pthread_mutex_unlock(&data->philos[i].meal);
+				checking_death(data, i);
 				return (NULL);
 			}
 			pthread_mutex_unlock(&data->philos[i].meal);

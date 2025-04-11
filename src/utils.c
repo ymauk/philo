@@ -6,13 +6,12 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:19:07 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/02 16:49:43 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/11 14:17:14 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-// ascii to int
 int	ft_atoi(const char *str)
 {
 	int	result;
@@ -42,7 +41,6 @@ int	ft_atoi(const char *str)
 	return (sign * result);
 }
 
-// handling errors
 void	error_handling(t_data *data, char *msg)
 {
 	if (!data)
@@ -50,7 +48,6 @@ void	error_handling(t_data *data, char *msg)
 	printf("%s", msg);
 }
 
-// new node at the end of the list
 void	ft_lstadd_back_ph(t_philos **lst, t_philos *new)
 {
 	t_philos	*ptr;

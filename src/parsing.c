@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:17:37 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/04 11:45:43 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/11 14:20:24 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	fill_struct(int argc, char **argv, t_data *data)
 void	create_philos(t_data *data)
 {
 	t_philos	*philo;
-	t_philos	*current;
 	int			i;
 
 	i = 0;
@@ -87,33 +86,18 @@ void	create_philos(t_data *data)
 	}
 	pthread_mutex_init(&data->print, NULL);
 	pthread_mutex_init(&data->check_dead_m, NULL);
+	create_philos2(data);
+}
+
+void	create_philos2(t_data *data)
+{
+	t_philos	*current;
+
 	if (data->philos)
 	{
 		current = data->philos;
 		while (current->next)
 			current = current->next;
 		current->next = data->philos;
-	}
-}
-
-void	clean_up(t_data *data)
-{
-	int			i;
-	int			nbr_philos;
-
-	i = 0;
-	if (data->philos)
-	{
-		nbr_philos = data->nbr_of_philos;
-		pthread_mutex_destroy(&data->print);
-		pthread_mutex_destroy(&data->check_dead_m);
-		while (nbr_philos > i)
-		{
-			pthread_mutex_destroy(&data->forks[i]);
-			pthread_mutex_destroy(&data->philos[i].meal);
-			i++;
-		}
-		free(data->philos);
-		free(data->forks);
 	}
 }

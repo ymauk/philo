@@ -1,7 +1,7 @@
 NAME = philo
-CFLAGS = -Wall -Wextra -Werror
-LDFLAGS = -fsanitize=address
-SRC = src/philo.c src/parsing.c src/utils.c src/routine.c src/messages.c
+CFLAGS = -Wall -Wextra -Werror 
+# LDFLAGS = -fsanitize=address
+SRC = src/philo.c src/parsing.c src/utils.c src/routine.c src/messages.c src/utils2.c
 OBJ_DIR = obj
 OBJS = $(SRC:src/%.c=$(OBJ_DIR)/%.o)
 
@@ -37,3 +37,6 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+
+
+# @cc $(OBJS) $(CFLAGS) $(LDFLAGS) -o $(NAME)
