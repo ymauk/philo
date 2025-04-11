@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:17:37 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/11 14:20:24 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/11 14:54:26 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	checking_input(t_data *data, int argc, char **argv)
 		}
 		i++;
 	}
-	if (argv[1][0] == '1')
+	if (ft_atoi(argv[1]) == 1)
 		return (one_philo(argv), 1);
 	return (0);
 }
