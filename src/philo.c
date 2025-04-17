@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 13:03:25 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/15 09:23:08 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/16 10:49:54 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	all_eaten(t_data *data)
 	while (data->nbr_of_philos > i)
 	{
 		pthread_mutex_lock(&data->philos->meal);
-		if (data->philos[i].has_eaten != data->nbr_philo_eat)
+		if (data->philos[i].has_eaten <= data->nbr_philo_eat)
 		{
 			pthread_mutex_unlock(&data->philos->meal);
 			return (0);
@@ -49,6 +49,7 @@ int	all_eaten(t_data *data)
 		i++;
 		pthread_mutex_unlock(&data->philos->meal);
 	}
+	data->check_snacks = 1;
 	return (1);
 }
 
@@ -67,6 +68,13 @@ int	check_mutex_var(t_philos *philo, int check)
 		pthread_mutex_lock(&philo->data->check_dead_m);
 		temp_var = philo->data->check_dead;
 		pthread_mutex_unlock(&philo->data->check_dead_m);
+		return (temp_var);
+	}
+	else if (check == 2)
+	{
+		pthread_mutex_lock(&philo->data->snacks_m);
+		temp_var = philo->data->check_snacks;
+		pthread_mutex_unlock(&philo->data->snacks_m);
 		return (temp_var);
 	}
 	else

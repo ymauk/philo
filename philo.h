@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:35:42 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/11 14:44:59 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/15 12:47:01 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ typedef struct s_data
 	int				nbr_philo_eat;
 	size_t			start_time;
 	int				check_dead;
+	int				check_snacks;
+	pthread_mutex_t	snacks_m;
 	pthread_mutex_t	check_dead_m;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;

@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:17:37 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/11 14:54:26 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/15 12:47:35 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	fill_struct(int argc, char **argv, t_data *data)
 	data->start_time = 0;
 	data->philos = NULL;
 	data->forks = NULL;
+	data->check_snacks = 0;
 }
 
 void	create_philos(t_data *data)
@@ -86,6 +87,7 @@ void	create_philos(t_data *data)
 	}
 	pthread_mutex_init(&data->print, NULL);
 	pthread_mutex_init(&data->check_dead_m, NULL);
+	pthread_mutex_init(&data->snacks_m, NULL);
 	create_philos2(data);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:11:00 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/11 15:10:31 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/15 13:20:49 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	*start_routine(void *arg)
 	philo = arg;
 	if (philo->id_philo % 2 != 0)
 		ft_usleep(philo->data->time_to_eat / 2);
-	while (philo->has_eaten != philo->data->nbr_philo_eat
+	while (!check_mutex_var(philo, 2)
 		&& check_mutex_var(philo, 1) != 1)
 	{
 		thinking((void *) philo);

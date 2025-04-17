@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 18:23:41 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/11 12:43:53 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/15 13:24:14 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	thinking(void *arg)
 	t_philos	*philo;
 
 	philo = arg;
-	if (check_mutex_var(philo, 1) != 1)
+	if (check_mutex_var(philo, 1) != 1 && !check_mutex_var(philo, 2))
 		print_message(philo, "is thinking");
 }
 
@@ -43,10 +43,10 @@ void	take_forks(void *arg)
 		second_fork = left_fork;
 	}
 	pthread_mutex_lock(&philo->data->forks[first_fork]);
-	if (check_mutex_var(philo, 1) != 1)
+	if (check_mutex_var(philo, 1) != 1 && !check_mutex_var(philo, 2))
 		print_message(philo, "has taken a fork");
 	pthread_mutex_lock(&philo->data->forks[second_fork]);
-	if (check_mutex_var(philo, 1) != 1)
+	if (check_mutex_var(philo, 1) != 1 && !check_mutex_var(philo, 2))
 		print_message(philo, "has taken a fork");
 }
 
@@ -59,11 +59,13 @@ void	eating(void *arg)
 	current_time = get_current_time();
 	pthread_mutex_lock(&philo->meal);
 	philo->last_meal = current_time;
-	philo->has_eaten++;
 	pthread_mutex_unlock(&philo->meal);
-	if (check_mutex_var(philo, 1) != 1)
+	if (check_mutex_var(philo, 1) != 1 && !check_mutex_var(philo, 2))
 		print_message(philo, "is eating");
 	ft_usleep(philo->data->time_to_eat);
+	pthread_mutex_lock(&philo->meal);
+	philo->has_eaten++;
+	pthread_mutex_unlock(&philo->meal);
 }
 
 void	putdown_forks(void *arg)
@@ -85,7 +87,7 @@ void	go_sleep(void *arg)
 	t_philos	*philo;
 
 	philo = arg;
-	if (check_mutex_var(philo, 1) != 1)
+	if (check_mutex_var(philo, 1) != 1 && !check_mutex_var(philo, 2))
 		print_message(philo, "is sleeping");
 	ft_usleep(philo->data->time_to_sleep);
 }
