@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:11:00 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/15 13:20:49 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/27 15:04:01 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ void	join_threads(t_data *data)
 void	print_message(t_philos *philo, const char *status)
 {
 	pthread_mutex_lock(&philo->data->print);
-	printf("%zu %d %s\n", get_current_time()
-		- philo->data->start_time, philo->id_philo, status);
+	if (check_mutex_var(philo, 1) != 1)
+		printf("%zu %d %s\n", get_current_time()
+			- philo->data->start_time, philo->id_philo, status);
 	pthread_mutex_unlock(&philo->data->print);
 }
 
@@ -56,12 +57,14 @@ void	*start_routine(void *arg)
 	t_philos	*philo;
 
 	philo = arg;
+	thinking((void *) philo);
 	if (philo->id_philo % 2 != 0)
 		ft_usleep(philo->data->time_to_eat / 2);
 	while (!check_mutex_var(philo, 2)
 		&& check_mutex_var(philo, 1) != 1)
 	{
-		thinking((void *) philo);
+		if (philo->has_eaten != 0)
+			thinking((void *) philo);
 		take_forks((void *) philo);
 		eating((void *) philo);
 		putdown_forks((void *) philo);

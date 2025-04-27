@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:35:42 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/15 12:47:01 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/26 14:02:56 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,6 @@ void	go_sleep(void *arg);
 //error message
 # define ERROR_1 "Invalid number of arguments\n"
 # define ERROR_2 "Invalid input found\n"
-# define ERROR_3 "Allocation of Memory has failed"
+# define ERROR_3 "Allocation of Memory has failed\n"
 
 #endif
