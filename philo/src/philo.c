@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 13:03:25 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/27 15:47:15 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/27 16:34:13 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,17 @@ int	all_eaten(t_data *data)
 	return (1);
 }
 
-void	one_philo(char **argv)
+void	one_philo(void *arg)
 {
-	printf("%s 1 died\n", argv[2]);
+	t_philos	*philo;
+	int			left_fork;
+
+	philo = arg;
+	left_fork = philo->id_philo - 1;
+	pthread_mutex_lock(&philo->data->forks[left_fork]);
+	print_message(philo, "has taken a fork");
+	ft_usleep(philo->data->time_to_die);
+	pthread_mutex_unlock(&philo->data->forks[left_fork]);
 }
 
 int	check_mutex_var(t_philos *philo, int check)

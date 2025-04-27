@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:35:42 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/26 14:02:56 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/27 16:34:32 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	create_philos2(t_data *data);
 //philo
 int		main(int argc, char **argv);
 int		all_eaten(t_data *data);
-void	one_philo(char **argv);
+void	one_philo(void *arg);
 int		check_mutex_var(t_philos *philo, int check);
 void	clean_up(t_data *data);
 
