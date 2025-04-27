@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:35:42 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/27 16:34:32 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/27 20:03:33 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_data
 	pthread_mutex_t	check_dead_m;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
+	pthread_mutex_t	nbr_p_m;
 }	t_data;
 
 typedef struct s_philos
@@ -57,9 +58,9 @@ void	create_philos2(t_data *data);
 //philo
 int		main(int argc, char **argv);
 int		all_eaten(t_data *data);
-void	one_philo(void *arg);
 int		check_mutex_var(t_philos *philo, int check);
-void	clean_up(t_data *data);
+int		check_mutex_1(t_philos *philo, int check);
+int		check_mutex_2(t_philos *philo, int check);
 
 //utils
 int		ft_atoi(const char *str);
@@ -70,6 +71,13 @@ void	error_handling(t_data *data, char *msg);
 
 //utils2
 void	checking_death(t_data *data, int i);
+int		check_value_size(char *str);
+size_t	ft_strlen(const char *value);
+int		ft_strcmp(const char *s1, const char *s2);
+void	clean_up(t_data *data);
+
+//utils3
+void	one_philo(void *arg);
 
 //routine
 void	*start_routine(void *arg);
@@ -89,5 +97,6 @@ void	go_sleep(void *arg);
 # define ERROR_1 "Invalid number of arguments\n"
 # define ERROR_2 "Invalid input found\n"
 # define ERROR_3 "Allocation of Memory has failed\n"
+# define ERROR_4 "Value size does not fit an Int\n"
 
 #endif

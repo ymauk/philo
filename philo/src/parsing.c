@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:17:37 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/27 15:47:03 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/27 19:53:56 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	parsing(int argc, char **argv, t_data *data)
 		return (1);
 	fill_struct(argc, argv, data);
 	create_philos(data);
+	create_philos2(data);
 	return (0);
 }
 
@@ -30,6 +31,8 @@ int	checking_input(t_data *data, int argc, char **argv)
 	while (i < argc)
 	{
 		j = 0;
+		if (check_value_size(argv[i]) == 1)
+			return (error_handling(data, ERROR_4), 1);
 		while (argv[i][j] != '\0')
 		{
 			if (i < 6 && argv[i][0] == '0')
@@ -72,6 +75,7 @@ void	create_philos(t_data *data)
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->nbr_of_philos);
 	if (!data->forks)
 		error_handling(data, ERROR_3);
+	pthread_mutex_init(&data->nbr_p_m, NULL);
 	while (data->nbr_of_philos > i)
 	{
 		philo[i].id_philo = i + 1;
@@ -86,7 +90,6 @@ void	create_philos(t_data *data)
 	pthread_mutex_init(&data->print, NULL);
 	pthread_mutex_init(&data->check_dead_m, NULL);
 	pthread_mutex_init(&data->snacks_m, NULL);
-	create_philos2(data);
 }
 
 void	create_philos2(t_data *data)

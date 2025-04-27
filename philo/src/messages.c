@@ -32,7 +32,7 @@ void	take_forks(void *arg)
 
 	philo = arg;
 	left_fork = philo->id_philo - 1;
-	right_fork = philo->id_philo % philo->data->nbr_of_philos;
+	right_fork = philo->id_philo % check_mutex_var(philo, 4);
 	if (left_fork > right_fork)
 	{
 		first_fork = left_fork;
@@ -79,7 +79,7 @@ void	putdown_forks(void *arg)
 
 	philo = arg;
 	left_fork = philo->id_philo - 1;
-	right_fork = philo->id_philo % philo->data->nbr_of_philos;
+	right_fork = philo->id_philo % check_mutex_var(philo, 4);
 	pthread_mutex_unlock(&philo->data->forks[left_fork]);
 	pthread_mutex_unlock(&philo->data->forks[right_fork]);
 }

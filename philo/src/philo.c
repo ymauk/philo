@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 13:03:25 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/27 16:34:13 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/27 20:02:32 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,15 @@ int	main(int argc, char **argv)
 int	all_eaten(t_data *data)
 {
 	int	i;
+	int	value;
 
 	i = 0;
+	value = check_mutex_var(&data->philos[0], 4);
 	pthread_mutex_lock(&data->philos->meal);
 	if (data->nbr_philo_eat == -1)
-	{
-		pthread_mutex_unlock(&data->philos->meal);
-		return (0);
-	}
+		return (pthread_mutex_unlock(&data->philos->meal), 0);
 	pthread_mutex_unlock(&data->philos->meal);
-	while (data->nbr_of_philos > i)
+	while (value > i)
 	{
 		pthread_mutex_lock(&data->philos->meal);
 		if (data->philos[i].has_eaten < data->nbr_philo_eat)
@@ -56,25 +55,23 @@ int	all_eaten(t_data *data)
 		i++;
 		pthread_mutex_unlock(&data->philos->meal);
 	}
-	usleep(500);
+	pthread_mutex_lock(&data->snacks_m);
 	data->check_snacks = 1;
+	pthread_mutex_unlock(&data->snacks_m);
 	return (1);
 }
 
-void	one_philo(void *arg)
+int	check_mutex_var(t_philos *philo, int check)
 {
-	t_philos	*philo;
-	int			left_fork;
-
-	philo = arg;
-	left_fork = philo->id_philo - 1;
-	pthread_mutex_lock(&philo->data->forks[left_fork]);
-	print_message(philo, "has taken a fork");
-	ft_usleep(philo->data->time_to_die);
-	pthread_mutex_unlock(&philo->data->forks[left_fork]);
+	if (check == 1 || check == 2)
+		return (check_mutex_1(philo, check));
+	else if (check == 3 || check == 4)
+		return (check_mutex_2(philo, check));
+	else
+		return (0);
 }
 
-int	check_mutex_var(t_philos *philo, int check)
+int	check_mutex_1(t_philos *philo, int check)
 {
 	int	temp_var;
 
@@ -86,36 +83,32 @@ int	check_mutex_var(t_philos *philo, int check)
 		pthread_mutex_unlock(&philo->data->check_dead_m);
 		return (temp_var);
 	}
-	else if (check == 2)
+	else
 	{
 		pthread_mutex_lock(&philo->data->snacks_m);
 		temp_var = philo->data->check_snacks;
 		pthread_mutex_unlock(&philo->data->snacks_m);
 		return (temp_var);
 	}
-	else
-		return (0);
 }
 
-void	clean_up(t_data *data)
+int	check_mutex_2(t_philos *philo, int check)
 {
-	int			i;
-	int			nbr_philos;
+	int	temp_var;
 
-	i = 0;
-	if (data->philos)
+	temp_var = 0;
+	if (check == 3)
 	{
-		nbr_philos = data->nbr_of_philos;
-		pthread_mutex_destroy(&data->print);
-		pthread_mutex_destroy(&data->check_dead_m);
-		pthread_mutex_destroy(&data->snacks_m);
-		while (nbr_philos > i)
-		{
-			pthread_mutex_destroy(&data->forks[i]);
-			pthread_mutex_destroy(&data->philos[i].meal);
-			i++;
-		}
-		free(data->philos);
-		free(data->forks);
+		pthread_mutex_lock(&philo->meal);
+		temp_var = philo->has_eaten;
+		pthread_mutex_unlock(&philo->meal);
+		return (temp_var);
+	}
+	else
+	{
+		pthread_mutex_lock(&philo->data->nbr_p_m);
+		temp_var = philo->data->nbr_of_philos;
+		pthread_mutex_unlock(&philo->data->nbr_p_m);
+		return (temp_var);
 	}
 }

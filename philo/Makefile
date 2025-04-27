@@ -1,6 +1,6 @@
 NAME = philo
 CFLAGS = -Wall -Wextra -Werror 
-SRC = src/philo.c src/parsing.c src/utils.c src/routine.c src/messages.c src/utils2.c
+SRC = src/philo.c src/parsing.c src/utils.c src/routine.c src/messages.c src/utils2.c src/utils3.c
 OBJ_DIR = obj
 OBJS = $(SRC:src/%.c=$(OBJ_DIR)/%.o)
 

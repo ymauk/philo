@@ -6,7 +6,7 @@
 /*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:11:00 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/27 16:30:46 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/27 19:44:54 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	join_threads(t_data *data)
 void	print_message(t_philos *philo, const char *status)
 {
 	pthread_mutex_lock(&philo->data->print);
-	if (check_mutex_var(philo, 1) != 1)
+	if (check_mutex_var(philo, 1) != 1 && check_mutex_var(philo, 2) == 0)
 		printf("%zu %d %s\n", get_current_time()
 			- philo->data->start_time, philo->id_philo, status);
 	pthread_mutex_unlock(&philo->data->print);
@@ -58,14 +58,14 @@ void	*start_routine(void *arg)
 
 	philo = arg;
 	thinking((void *) philo);
-	if (philo->data->nbr_of_philos == 1)
+	if (check_mutex_var(philo, 4) == 1)
 		one_philo((void *) philo);
 	if (philo->id_philo % 2 != 0)
 		ft_usleep(philo->data->time_to_eat / 2);
 	while (!check_mutex_var(philo, 2)
 		&& check_mutex_var(philo, 1) != 1)
 	{
-		if (philo->has_eaten != 0)
+		if (check_mutex_var(philo, 3) != 0)
 			thinking((void *) philo);
 		take_forks((void *) philo);
 		eating((void *) philo);
@@ -79,14 +79,16 @@ void	*monitoring_routine(void *arg)
 {
 	t_data	*data;
 	int		i;
+	int		value;
 
 	data = (t_data *)arg;
+	value = check_mutex_var(&data->philos[0], 4);
 	while (1)
 	{
 		if (all_eaten(data) == 1)
 			break ;
 		i = 0;
-		while (data->nbr_of_philos > i)
+		while (value > i)
 		{
 			pthread_mutex_lock(&data->philos[i].meal);
 			if (get_current_time() - data->philos[i].last_meal
