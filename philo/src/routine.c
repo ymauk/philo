@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymauk <ymauk@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ymauk <ymauk@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:11:00 by ymauk             #+#    #+#             */
-/*   Updated: 2025/04/28 14:48:14 by ymauk            ###   ########.fr       */
+/*   Updated: 2025/04/28 14:10:42 by ymauk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	*start_routine(void *arg)
 	while (!check_mutex_var(philo, 2)
 		&& check_mutex_var(philo, 1) != 1)
 	{
-		printf("arrived\n");
 		if (check_mutex_var(philo, 3) != 0)
 			thinking((void *) philo);
 		take_forks((void *) philo);
